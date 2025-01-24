@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import quizzes from "../quizzes";
+import "./Quiz.css"; // Import the CSS file
 
 const primaryColor = "rgb(52, 156, 40)";
 const secondaryColor = "rgb(212, 235, 38)";
@@ -56,9 +57,19 @@ const Quiz = ({ quizId, onQuizChange }) => {
     return {
       backgroundColor: isSelected ? selectedPrimaryColor : primaryColor,
       color: isSelected ? selectedSecondaryColor : secondaryColor,
-      borderColor: isSelected ? selectedPrimaryColor : primaryColor,
+      borderColor: isSelected ? borderColor : "transparent",
       borderWidth: "2px",
       borderStyle: "solid",
+      fontWeight: "bold",
+    };
+  };
+
+  const getNavButtonStyle = (isSelected) => {
+    return {
+      borderColor: isSelected ? borderColor : "transparent",
+      borderWidth: "2px",
+      borderStyle: "solid",
+      fontWeight: "bold",
     };
   };
 
@@ -111,12 +122,17 @@ const Quiz = ({ quizId, onQuizChange }) => {
       </div>
       <div className="d-flex justify-content-between mt-3">
         {quizId !== 1 && (
-          <button className="btn btn-secondary" onClick={handleBack}>
+          <button
+            className="btn btn-secondary"
+            style={getNavButtonStyle(false)}
+            onClick={handleBack}
+          >
             Back
           </button>
         )}
         <button
           className="btn btn-primary next-button"
+          style={getNavButtonStyle(true)}
           onClick={handleNext}
           disabled={!selectedAnswer}
         >
