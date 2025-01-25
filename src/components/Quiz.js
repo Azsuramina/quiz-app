@@ -11,7 +11,7 @@ const borderColor = "#e0e0e0"; // lighter color for borders
 const selectedPrimaryColor = "rgb(72, 176, 60)";
 const selectedSecondaryColor = "rgb(232, 255, 58)";
 
-const Quiz = ({ quizId, onQuizChange }) => {
+const Quiz = ({ quizId, onQuizChange, debug }) => {
   const quiz = quizzes.find((q) => q.id === quizId);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -20,7 +20,9 @@ const Quiz = ({ quizId, onQuizChange }) => {
 
   const handleNext = () => {
     setHistory([...history, { quizId, questionIndex: currentQuestionIndex }]);
-    if (quizId === 1) {
+    if (quizId === 1 && currentQuestionIndex === 0) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else if (quizId === 1) {
       const answer = answers[1];
       if (answer === "THC Products") {
         onQuizChange(2);
@@ -148,11 +150,13 @@ const Quiz = ({ quizId, onQuizChange }) => {
         </button>
       </div>
       {/* Debugging UI */}
-      <div className="mt-3">
-        <h5>Debug Info:</h5>
-        <pre>{JSON.stringify(answers, null, 2)}</pre>
-        <p>User Reference: {userReference}</p>
-      </div>
+      {debug && (
+        <div className="mt-3">
+          <h5>Debug Info:</h5>
+          <pre>{JSON.stringify(answers, null, 2)}</pre>
+          <p>User Reference: {userReference}</p>
+        </div>
+      )}
     </div>
   );
 };

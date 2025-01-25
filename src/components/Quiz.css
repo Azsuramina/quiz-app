@@ -1,3 +1,7 @@
 .next-button {
   margin-left: auto;
 }
+
+textarea.form-control {
+  text-align: center;
+}
