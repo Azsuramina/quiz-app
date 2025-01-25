@@ -16,6 +16,7 @@ const Quiz = ({ quizId, onQuizChange }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [history, setHistory] = useState([]);
+  const [userReference, setUserReference] = useState(null);
 
   const handleNext = () => {
     setHistory([...history, { quizId, questionIndex: currentQuestionIndex }]);
@@ -43,10 +44,17 @@ const Quiz = ({ quizId, onQuizChange }) => {
   };
 
   const handleAnswerChange = (questionId, answer) => {
-    setAnswers({
+    if (currentQuestionIndex === 0 && !userReference) {
+      setUserReference(answer || "guest");
+    }
+    const updatedAnswers = {
       ...answers,
       [questionId]: answer,
-    });
+      userReference: userReference || answer || "guest",
+    };
+    setAnswers(updatedAnswers);
+    console.log("Updated Answers:", updatedAnswers);
+    console.log("User Reference:", userReference || answer || "guest");
   };
 
   const currentQuestion = quiz.questions[currentQuestionIndex];
@@ -138,6 +146,12 @@ const Quiz = ({ quizId, onQuizChange }) => {
         >
           Next
         </button>
+      </div>
+      {/* Debugging UI */}
+      <div className="mt-3">
+        <h5>Debug Info:</h5>
+        <pre>{JSON.stringify(answers, null, 2)}</pre>
+        <p>User Reference: {userReference}</p>
       </div>
     </div>
   );

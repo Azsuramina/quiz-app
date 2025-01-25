@@ -5,6 +5,11 @@ const quizzes = [
     questions: [
       {
         id: 1,
+        question: "Please enter your phone number (optional):",
+        type: "text",
+      },
+      {
+        id: 2,
         question: "What are you looking for?",
         type: "multiple-choice",
         options: ["THC Products", "Art Supplies", "Something Else"],
